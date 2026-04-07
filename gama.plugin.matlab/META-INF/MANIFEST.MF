@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Extension to interface Matlab and GAMA
+Bundle-SymbolicName: gama.plugin.matlab;singleton:=true
+Bundle-Vendor: UMMISCO
+Bundle-Version: 2025.6.0.qualifier
+Automatic-Module-Name: ummisco.gama.extensions.matlab
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+Require-Bundle: gama.core,
+ gama.dependencies
+Export-Package: gama.plugin.matlab.gaml.files,
+ gama.plugin.matlab.gaml.species
+Bundle-ClassPath: libs/engine.jar,
+ .

@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Fuzzy logic extension
+Bundle-SymbolicName: gama.plugin.fuzzylogic;singleton:=true
+Bundle-Vendor: UTC-IRIT
+Bundle-Version: 2025.6.0.qualifier
+Automatic-Module-Name: gama.plugin.fuzzylogic
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+Require-Bundle: gama.core,
+ gama.dependencies
+Bundle-ClassPath: lib/jFuzzyLogic.jar,
+ .
+Export-Package: gama.plugin.fuzzylogic.gaml

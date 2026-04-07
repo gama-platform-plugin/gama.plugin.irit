@@ -27,6 +27,16 @@
              version="1.0.0.qualifier">
         <category name="gama.optional"/>
     </feature>
+    <feature url="features/gama.plugin.feature.fuzzylogic_2025.6.0.qualifier.jar"
+             id="gama.plugin.feature.fuzzylogic"
+             version="2025.6.0.qualifier">
+        <category name="gama.optional"/>
+    </feature>
+    <feature url="features/gama.plugin.feature.matlab_2025.6.0.qualifier.jar"
+             id="gama.plugin.feature.matlab"
+             version="2025.6.0.qualifier">
+        <category name="gama.optional"/>
+    </feature>
 
     <category-def name="gama.ui"                    label="UI components of GAMA"/>
     <category-def name="gama.core"                  label="Core components of GAMA"/>

@@ -27,6 +27,11 @@
         <module>../gama.plugin.feature.netcdf</module>
         <module>../gama.plugin.switchproject</module>
         <module>../gama.plugin.feature.switchproject</module>
+
+        <module>../gama.plugin.fuzzylogic</module>
+        <module>../gama.plugin.feature.fuzzylogic</module>
+        <module>../gama.plugin.matlab</module>
+        <module>../gama.plugin.feature.matlab</module>
         
         <module>../gama.plugin.p2updatesite</module>
     </modules>

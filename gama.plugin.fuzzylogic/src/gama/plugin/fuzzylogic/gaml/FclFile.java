@@ -9,10 +9,10 @@ import gama.core.runtime.exceptions.GamaRuntimeException;
 import gama.core.util.IList;
 import gama.core.util.file.GamaFile;
 import gama.core.util.file.GamaFileMetaData;
+import gama.gaml.interfaces.IGamlDescription.ConstantDoc;
+import gama.gaml.interfaces.IGamlDescription.Doc;
 import gama.gaml.operators.Strings;
-import gama.gaml.types.IContainerType;
 import gama.gaml.types.IType;
-import gama.gaml.types.Types;
 import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.FunctionBlock;
 import net.sourceforge.jFuzzyLogic.rule.RuleBlock;
@@ -57,11 +57,11 @@ public class FclFile extends GamaFile<IList<String>, String> {
 //		}
 
 		@Override
-		public String getDocumentation() {
+		public Doc getDocumentation() {
 			final StringBuilder sb = new StringBuilder();
-			sb.append("Number of variables: ").append(nbVariables).append(Strings.LN);			
+			sb.append("Number of variables: ").append(nbVariables).append(Strings.LN);
 			sb.append("Number of rules: ").append(nbRules).append(Strings.LN);
-			return sb.toString();
+			return new ConstantDoc(sb.toString());
 		}
 
 		@Override
@@ -96,9 +96,5 @@ public class FclFile extends GamaFile<IList<String>, String> {
 		return null;
 	}
 
-	@Override
-	public IContainerType<?> getGamlType() {
-		return Types.FILE.of(Types.INT, Types.STRING);
-	}
 
 }

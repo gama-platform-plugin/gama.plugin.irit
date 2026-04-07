@@ -79,9 +79,4 @@ public class MatlabFile extends GamaFile<IList<String>, String> {
 		return null;
 	}
 	
-	@Override
-	public IContainerType<?> getGamlType() {
-		return Types.FILE.of(Types.INT, Types.STRING);
-	}
-	
 }

@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SwITCh Project
+Bundle-SymbolicName: gama.plugin.switchproject;singleton:=true
+Bundle-Vendor: IRIT
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: irit.gama.switchproject
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+Require-Bundle: gama.core,
+ gama.dependencies,
+ gama.annotations
+Export-Package: gama.plugin.switchproject.gama.common.interfaces,
+ gama.plugin.switchproject.gama.util.deque,
+ gama.plugin.switchproject.gama.util.event_manager,
+ gama.plugin.switchproject.gaml.architecure.event_manager,
+ gama.plugin.switchproject.gaml.operators,
+ gama.plugin.switchproject.gaml.skills.logging,
+ gama.plugin.switchproject.gaml.skills.scheduling,
+ gama.plugin.switchproject.gaml.skills.traffic,
+ gama.plugin.switchproject.gaml.statements,
+ gama.plugin.switchproject.gaml.types

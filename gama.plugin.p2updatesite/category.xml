@@ -12,8 +12,18 @@
             gama.optional.formats      - New file format support (IFC, NetCDF, CIM...)
             gama.optional.ia           - Artificial intelligence components
     -->
-    <feature url="features/gama.plugin.feature.MY_PLUGIN_1.0.0.qualifier.jar"
-             id="gama.plugin.feature.MY_PLUGIN"
+    <feature url="features/gama.plugin.feature.cim_1.0.0.qualifier.jar"
+             id="gama.plugin.feature.cim"
+             version="1.0.0.qualifier">
+        <category name="gama.optional.formats"/>
+    </feature>
+    <feature url="features/gama.plugin.feature.netcdf_1.0.0.qualifier.jar"
+             id="gama.plugin.feature.netcdf"
+             version="1.0.0.qualifier">
+        <category name="gama.optional.formats"/>
+    </feature>
+    <feature url="features/gama.plugin.feature.switchproject_1.0.0.qualifier.jar"
+             id="gama.plugin.feature.switchproject"
              version="1.0.0.qualifier">
         <category name="gama.optional"/>
     </feature>

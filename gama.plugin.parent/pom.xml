@@ -21,8 +21,13 @@
 
     <!-- ── Modules: add one entry per plugin/feature in this repo ── -->
     <modules>
-        <module>../MY_PLUGIN</module>
-        <module>../MY_PLUGIN.feature</module>
+        <module>../gama.plugin.cim</module>
+        <module>../gama.plugin.feature.cim</module>
+        <module>../gama.plugin.netcdf</module>
+        <module>../gama.plugin.feature.netcdf</module>
+        <module>../gama.plugin.switchproject</module>
+        <module>../gama.plugin.feature.switchproject</module>
+        
         <module>../gama.plugin.p2updatesite</module>
     </modules>
 

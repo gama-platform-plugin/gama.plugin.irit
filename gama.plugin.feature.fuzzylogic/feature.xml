@@ -2,7 +2,7 @@
 <feature
       id="gama.plugin.feature.fuzzylogic"
       label="Fuzzy logic"
-      version="2025.6.0.qualifier"
+      version="2026.6.0.qualifier"
       provider-name="IRIT">
 
    <description url="http://www.example.com/description">

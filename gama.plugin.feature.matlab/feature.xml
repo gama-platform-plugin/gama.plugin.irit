@@ -2,7 +2,7 @@
 <feature
       id="gama.plugin.feature.matlab"
       label="Matlab"
-      version="2025.6.0.qualifier"
+      version="2026.6.0.qualifier"
       provider-name="UMMISCO">
 
    <description url="http://www.example.com/description">

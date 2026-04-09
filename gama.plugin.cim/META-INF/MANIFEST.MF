@@ -41,8 +41,8 @@ Export-Package: com.fasterxml.jackson.annotation,
  com.fasterxml.jackson.databind.type,
  com.fasterxml.jackson.databind.util,
  com.fasterxml.jackson.databind.util.internal
-Require-Bundle: gama.dependencies,
- gama.core;bundle-version="0.0.0"
+Require-Bundle: gama.dependencies,gama.core;bundle-version="0.0.0",
+ gama.annotations,gama.processor,gama.api
 Automatic-Module-Name: across.gaml.extensions.citygml
 Bundle-ClassPath: lib/jackson-core-2.16.1.jar,
  lib/citygml4j-cityjson-3.2.0.jar,
@@ -57,7 +57,7 @@ Bundle-ClassPath: lib/jackson-core-2.16.1.jar,
  lib/xml-objects-1.1.0.jar,
  lib/xsom-4.0.4.jar,
  .
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Import-Package: gama.annotations.precompiler,
  gama.core.metamodel.shape,
  gama.core.runtime,

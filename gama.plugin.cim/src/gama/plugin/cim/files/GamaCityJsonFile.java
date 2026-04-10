@@ -33,21 +33,25 @@ import org.xmlobjects.gml.model.geometry.Envelope;
 import org.xmlobjects.gml.model.geometry.GeometryProperty;
 import org.xmlobjects.gml.model.geometry.primitives.LinearRing;
 
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.file;
-import gama.annotations.precompiler.IConcept;
-import gama.core.common.geometry.Envelope3D;
-import gama.core.metamodel.shape.GamaPoint;
-import gama.core.metamodel.shape.IShape;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaListFactory;
-import gama.core.util.IList;
+import gama.annotations.doc;
+import gama.annotations.file;
+import gama.annotations.support.IConcept;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.GamaGeometryType;
+import gama.api.types.geometry.GamaPointFactory;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.Types;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.geometry.GamaPoint;
+import gama.api.types.geometry.IPoint;
+import gama.api.utils.geometry.GamaEnvelopeFactory;
+import gama.api.types.geometry.IShape;
+import gama.api.types.list.GamaListFactory;
+import gama.api.types.list.IList;
+// Envelope3D usage removed; use IEnvelope from file base class instead
+import gama.api.utils.geometry.IEnvelope;
 import gama.core.util.file.GamaGeometryFile;
 import gama.gaml.operators.spatial.SpatialCreation;
-import gama.gaml.types.GamaGeometryType;
-import gama.gaml.types.IType;
-import gama.gaml.types.Types;
 
 
 /**
@@ -63,7 +67,8 @@ import gama.gaml.types.Types;
 		doc = @doc ("Represents geospatial files written using the GeoJSON format. The internal representation is a list of geometries"))
 public class GamaCityJsonFile extends GamaGeometryFile {
 	
-	Envelope3D envelope;
+	// Envelope is obtained from the geometry when needed
+	private IEnvelope envelope;
 
 	public GamaCityJsonFile(IScope scope, String pathName) throws GamaRuntimeException {
 		super(scope, pathName);
@@ -72,7 +77,8 @@ public class GamaCityJsonFile extends GamaGeometryFile {
 	
 	@Override
 	protected IShape buildGeometry(final IScope scope) {
-		return GamaGeometryType.geometriesToGeometry(scope, getBuffer());
+		// Build a geometry collection from the buffered shapes
+		return SpatialCreation.geometryCollection(scope, getBuffer());
 	}
 
 	@Override
@@ -83,19 +89,24 @@ public class GamaCityJsonFile extends GamaGeometryFile {
 	}
 
 	@Override
-	public Envelope3D computeEnvelope(final IScope scope) {
-		fillBuffer(scope);
-		return envelope;
+	public IEnvelope computeEnvelope(final IScope scope) {
+		// Delegate to the geometry's envelope (GamaGeometryFile expects IEnvelope)
+		try {
+			final IShape g = getGeometry(scope);
+			return g == null ? null : g.getEnvelope();
+		} catch (final Exception e) {
+			return null;
+		}
 	}
 	
 	public IShape buildShape(IScope scope,AbstractGeometry geometry ) {
 		if (geometry instanceof LinearRing) {
 			LinearRing lr = (LinearRing) geometry;
 			DirectPositionList pts = lr.getControlPoints().getPosList();
-			IList<GamaPoint> points = GamaListFactory.create();
+			IList<IPoint> points = GamaListFactory.create(Types.POINT);
 			List<Double> v = pts.getValue();
 			for(int i = 0; i < v.size() - 2; i= i+3) {
-				points.add( new GamaPoint(v.get(i),v.get(i+1),v.get(i+2)));
+				points.add( GamaPointFactory.create(v.get(i), v.get(i+1), v.get(i+2)) );
 			}
 			return SpatialCreation.polygon(scope, points);
 		}
@@ -157,15 +168,15 @@ public class GamaCityJsonFile extends GamaGeometryFile {
 	        
 	        cityModel.getFeatureMembers().forEach(i -> System.out.println(i));
 	        Envelope env =  cityModel.getBoundedBy() != null ? cityModel.getBoundedBy().getEnvelope() : null;
-	        GamaPoint ptLC = null;
+						IPoint ptLC = null;
 	        if (env != null) {
 	        	List<Double> lcp =  env.getLowerCorner().getValue();
 	 	        List<Double> ucp =  env.getUpperCorner().getValue();
-	 	       ptLC = new GamaPoint(lcp.get(0),lcp.get(1),lcp.get(2));
-	 	        envelope = Envelope3D.of(lcp.get(0), ucp.get(0), lcp.get(1), ucp.get(1),lcp.get(2), ucp.get(2));
+				   ptLC = GamaPointFactory.create(lcp.get(0), lcp.get(1), lcp.get(2));
+					envelope = GamaEnvelopeFactory.of(lcp.get(0), ucp.get(0), lcp.get(1), ucp.get(1), lcp.get(2), ucp.get(2));
 	 	    }
-	        Map<String, Integer> cityObjects = new TreeMap<>();
-	       IList<IShape> shapes = GamaListFactory.create();
+							Map<String, Integer> cityObjects = new TreeMap<>();
+						   IList<IShape> shapes = GamaListFactory.create();
 	       
 	       
 	        for (AbstractCityObjectProperty cityObjectMember : cityModel.getCityObjectMembers()) {
@@ -193,7 +204,7 @@ public class GamaCityJsonFile extends GamaGeometryFile {
 					List<AbstractSpaceBoundaryProperty> boundaries = ((AbstractSpace)cityObject).getBoundaries();
 					IShape shape = BuildGeometriesSpace(scope, boundaries);
 					if (shape != null) {
-						if (ptLC != null) shape.setLocation(shape.getLocation().minus(ptLC));
+																																														if (ptLC != null) shape.setLocation(shape.getLocation().minus(ptLC));
 						shapes.add(shape);
 					}
 				}
@@ -214,13 +225,11 @@ public class GamaCityJsonFile extends GamaGeometryFile {
 					System.out.println("Unexpected city object: " + sn);
 					//throw new IllegalArgumentException("Unexpected city object: " + sn);
 				}
-	            System.out.println("shapes: " + shapes.size());
-	            setBuffer(shapes);
-		          
+				System.out.println("shapes: " + shapes.size());
+				setBuffer(shapes);
 
-	            if (envelope == null) {
-	            	envelope = Envelope3D.of(shapes);
-	            }
+				// envelope will be computed on demand from the geometry
+				envelope = null;
 				 
 	            
 	            

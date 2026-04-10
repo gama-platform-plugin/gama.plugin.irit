@@ -1,12 +1,13 @@
 package gama.plugin.fuzzylogic.utils.validator;
 
+import gama.api.compilation.descriptions.IDescription;
+import gama.api.compilation.descriptions.IDescriptionValidator;
+import gama.api.compilation.descriptions.ISkillDescription;
+import gama.api.constants.IGamlIssue;
+import gaml.compiler.descriptions.SkillDescription;
+import gaml.compiler.descriptions.SpeciesDescription;
+import gaml.compiler.descriptions.StatementDescription;
 import gama.plugin.fuzzylogic.gaml.skills.FuzzylogicSkill;
-import gama.gaml.compilation.IDescriptionValidator;
-import gama.gaml.descriptions.IDescription;
-import gama.gaml.descriptions.SkillDescription;
-import gama.gaml.descriptions.SpeciesDescription;
-import gama.gaml.descriptions.StatementDescription;
-import gama.gaml.interfaces.IGamlIssue;
 
 public class FuzzyLogicStatementValidator implements IDescriptionValidator<StatementDescription> {
 
@@ -25,7 +26,7 @@ public class FuzzyLogicStatementValidator implements IDescriptionValidator<State
 		
 		
 					
-		for(SkillDescription skillDesc : ((SpeciesDescription)superDesc).getSkills()) {
+		for(ISkillDescription skillDesc : ((SpeciesDescription)superDesc).getSkills()) {
 			if(skillDesc.getInstance() instanceof FuzzylogicSkill) {return;}
 		}
 		

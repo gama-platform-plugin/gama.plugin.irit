@@ -2,32 +2,29 @@ package gama.plugin.fuzzylogic.gaml.statements;
 
 import java.util.Map;
 
-import gama.annotations.precompiler.ISymbolKind;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.facet;
-import gama.annotations.precompiler.GamlAnnotations.facets;
-import gama.annotations.precompiler.GamlAnnotations.inside;
-import gama.annotations.precompiler.GamlAnnotations.symbol;
-import gama.core.metamodel.agent.IAgent;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaMapFactory;
-import gama.core.util.file.GamaFile;
-import gama.plugin.fuzzylogic.gaml.statements.FLBindStatement.FuzzyLogicBindStatementSerializer;
+import gama.annotations.doc;
+import gama.annotations.facet;
+import gama.annotations.facets;
+import gama.annotations.inside;
+import gama.annotations.symbol;
+import gama.annotations.support.ISymbolKind;
+import gama.api.annotations.serializer;
+import gama.api.annotations.validator;
+import gama.api.compilation.descriptions.IDescription;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.expressions.IExpression;
+import gama.api.gaml.statements.AbstractStatement;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.Types;
+import gama.api.kernel.agent.IAgent;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.file.GamaFile;
+import gama.api.types.map.GamaMapFactory;
+import gaml.compiler.descriptions.StatementDescription;
+// serializer APIs reworked — plugin provides no custom serializer here
 import gama.plugin.fuzzylogic.gaml.statements.FLInitFIS.FLInitFISValidator;
 import gama.plugin.fuzzylogic.utils.IFLKeyword;
 import gama.plugin.fuzzylogic.utils.validator.FuzzyLogicStatementValidator;
-import gama.gaml.compilation.annotations.serializer;
-import gama.gaml.compilation.annotations.validator;
-import gama.gaml.descriptions.IDescription;
-import gama.gaml.descriptions.StatementDescription;
-import gama.gaml.descriptions.SymbolDescription;
-import gama.gaml.descriptions.SymbolSerializer;
-import gama.gaml.expressions.IExpression;
-import gama.gaml.statements.AbstractStatement;
-import gama.gaml.types.IType;
-import gama.gaml.types.Types;
-
 import net.sourceforge.jFuzzyLogic.FIS;
 
 @symbol (
@@ -48,7 +45,6 @@ import net.sourceforge.jFuzzyLogic.FIS;
 		}, 
 		omissible = IFLKeyword.FL_FROM)
 @validator (FLInitFISValidator.class)
-@serializer (FuzzyLogicBindStatementSerializer.class)
 public class FLInitFIS extends AbstractStatement {
 
 	public static class FLInitFISValidator extends FuzzyLogicStatementValidator {
@@ -60,14 +56,7 @@ public class FLInitFIS extends AbstractStatement {
 		
 	}
 
-	public static class FuzzyLogicBindStatementSerializer extends SymbolSerializer<StatementDescription> {
-
-		@Override
-		protected void serialize(final SymbolDescription desc, final StringBuilder sb, final boolean includingBuiltIn) {
-		//TODO TO COMPLETE
-			sb.append(IFLKeyword.FL_INIT_FIS).append(";");
-		}
-	}	
+	// Serializer support removed: plugin relies on default serialization for now.
 	
 	protected IExpression file;	
 	

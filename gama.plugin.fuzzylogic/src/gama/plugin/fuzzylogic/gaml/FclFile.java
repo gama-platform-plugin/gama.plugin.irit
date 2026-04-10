@@ -1,18 +1,18 @@
 package gama.plugin.fuzzylogic.gaml;
 
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.file;
-import gama.annotations.precompiler.IConcept;
-import gama.core.common.geometry.Envelope3D;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.IList;
-import gama.core.util.file.GamaFile;
-import gama.core.util.file.GamaFileMetaData;
-import gama.gaml.interfaces.IGamlDescription.ConstantDoc;
-import gama.gaml.interfaces.IGamlDescription.Doc;
-import gama.gaml.operators.Strings;
-import gama.gaml.types.IType;
+// documentation is returned as a simple String
+
+import gama.annotations.doc;
+import gama.annotations.file;
+import gama.annotations.support.IConcept;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.IType;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.file.GamaFile;
+import gama.api.types.list.IList;
+import gama.api.utils.geometry.IEnvelope;
+// GamaFileMetaData and ConstantDoc moved in the rework; keep a lightweight local metadata class instead
+// Strings utility no longer used; use System.lineSeparator() instead
 import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.FunctionBlock;
 import net.sourceforge.jFuzzyLogic.rule.RuleBlock;
@@ -28,23 +28,23 @@ import net.sourceforge.jFuzzyLogic.rule.RuleBlock;
 @SuppressWarnings("unchecked")
 public class FclFile extends GamaFile<IList<String>, String> {
 
-	public static class FclInfo extends GamaFileMetaData { 
+	public static class FclInfo {
+
+		private static final String DELIMITER = ";";
+		private static final String SUFFIX_DEL = " | ";
 
 		public int nbRules;
 		public int nbVariables;
 
 		public FclInfo(final String fileName, final long modificationStamp) {
-			super(modificationStamp);
-
-	        FIS fis = FIS.load(fileName,true);	 
-	       	        
-	        for(FunctionBlock fb : fis ) {
-	        	nbVariables += fb.getVariables().size();
-	        	
-	        	for(RuleBlock rb : fb.getRuleBlocks().values()) {
-	        		nbRules += rb.getRules().size();
-	        	}
-	        }
+			// lightweight metadata: compute numbers of variables and rules
+			FIS fis = FIS.load(fileName, true);
+			for (final FunctionBlock fb : fis) {
+				nbVariables += fb.getVariables().size();
+				for (final RuleBlock rb : fb.getRuleBlocks().values()) {
+					nbRules += rb.getRules().size();
+				}
+			}
 		}
 
 //		public FclInfo(final String propertyString) {
@@ -56,32 +56,28 @@ public class FclFile extends GamaFile<IList<String>, String> {
 //			savedCycle = Integer.valueOf(segments[3]);
 //		}
 
-		@Override
-		public Doc getDocumentation() {
+		public String getDocumentation() {
 			final StringBuilder sb = new StringBuilder();
-			sb.append("Number of variables: ").append(nbVariables).append(Strings.LN);
-			sb.append("Number of rules: ").append(nbRules).append(Strings.LN);
-			return new ConstantDoc(sb.toString());
+			sb.append("Number of variables: ").append(nbVariables).append(System.lineSeparator());
+			sb.append("Number of rules: ").append(nbRules).append(System.lineSeparator());
+			return sb.toString();
 		}
 
-		@Override
 		public String getSuffix() {
 			return "Variables: " + nbVariables + " | Rules: " + nbRules;
 		}
 
-		@Override
 		public void appendSuffix(final StringBuilder sb) {
-			sb.append("Variables: ").append(nbVariables).append(SUFFIX_DEL);			
+			sb.append("Variables: ").append(nbVariables).append(SUFFIX_DEL);
 			sb.append("Rules: ").append(nbRules);
-
 		}
 
 		/**
 		 * @return
 		 */
-		@Override
 		public String toPropertyString() {
-			return super.toPropertyString() + DELIMITER + nbVariables + DELIMITER + nbRules;
+			// simple serialization for properties
+			return nbVariables + DELIMITER + nbRules;
 		}
 	}
 	
@@ -92,7 +88,8 @@ public class FclFile extends GamaFile<IList<String>, String> {
 	}
 
 	@Override
-	public Envelope3D computeEnvelope(IScope scope) {
+	public IEnvelope computeEnvelope(IScope scope) {
+		// FCL files are not geometric; return null for envelope
 		return null;
 	}
 

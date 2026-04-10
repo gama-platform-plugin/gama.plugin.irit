@@ -2,30 +2,27 @@ package gama.plugin.fuzzylogic.gaml.statements;
 
 import java.util.Map;
 
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.facet;
-import gama.annotations.precompiler.GamlAnnotations.facets;
-import gama.annotations.precompiler.GamlAnnotations.inside;
-import gama.annotations.precompiler.GamlAnnotations.symbol;
-import gama.annotations.precompiler.ISymbolKind;
-import gama.core.metamodel.agent.IAgent;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.plugin.fuzzylogic.gaml.statements.FLBindStatement.FuzzyLogicBindStatementSerializer;
+import gama.annotations.doc;
+import gama.annotations.facet;
+import gama.annotations.facets;
+import gama.annotations.inside;
+import gama.annotations.symbol;
+import gama.annotations.support.ISymbolKind;
+import gama.api.annotations.serializer;
+import gama.api.annotations.validator;
+import gama.api.compilation.descriptions.IDescription;
+import gama.api.constants.IGamlIssue;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.expressions.IExpression;
+import gama.api.gaml.statements.AbstractStatement;
+import gama.api.gaml.types.IType;
+import gama.api.kernel.agent.IAgent;
+import gama.api.runtime.scope.IScope;
+import gaml.compiler.descriptions.SpeciesDescription;
+import gaml.compiler.descriptions.StatementDescription;
 import gama.plugin.fuzzylogic.gaml.statements.FLBindStatement.FuzzyLogicBindStatementValidator;
 import gama.plugin.fuzzylogic.utils.IFLKeyword;
 import gama.plugin.fuzzylogic.utils.validator.FuzzyLogicStatementValidator;
-import gama.gaml.compilation.annotations.serializer;
-import gama.gaml.compilation.annotations.validator;
-import gama.gaml.descriptions.IDescription;
-import gama.gaml.descriptions.SpeciesDescription;
-import gama.gaml.descriptions.StatementDescription;
-import gama.gaml.descriptions.SymbolDescription;
-import gama.gaml.descriptions.SymbolSerializer;
-import gama.gaml.expressions.IExpression;
-import gama.gaml.interfaces.IGamlIssue;
-import gama.gaml.statements.AbstractStatement;
-import gama.gaml.types.IType;
 
 /**
  * The class SetVariableStatement.
@@ -62,7 +59,6 @@ import gama.gaml.types.IType;
 	}, 
 	omissible = IFLKeyword.FL_ATTRIBUTE)
 @validator (FuzzyLogicBindStatementValidator.class)
-@serializer (FuzzyLogicBindStatementSerializer.class)
 public class FLBindStatement extends AbstractStatement {
 
 	public static class FuzzyLogicBindStatementValidator extends FuzzyLogicStatementValidator {
@@ -94,16 +90,6 @@ public class FLBindStatement extends AbstractStatement {
 				description.error("The attribute " + att.getName() + " does not exist.",
 						IGamlIssue.UNKNOWN_FIELD);		
 			}
-		}
-	}
-	
-	
-	public static class FuzzyLogicBindStatementSerializer extends SymbolSerializer<StatementDescription> {
-
-		@Override
-		protected void serialize(final SymbolDescription desc, final StringBuilder sb, final boolean includingBuiltIn) {
-		//TODO TO COMPLETE
-			sb.append(IFLKeyword.FL_BIND).append(";");
 		}
 	}
 

@@ -2,18 +2,18 @@ package gama.plugin.fuzzylogic.gaml.skills;
 
 import java.util.Map;
 
-import gama.core.common.interfaces.IKeyword;
-import gama.core.metamodel.agent.IAgent;
-import gama.annotations.precompiler.IConcept;
-import gama.annotations.precompiler.GamlAnnotations.action;
-import gama.annotations.precompiler.GamlAnnotations.arg;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.skill;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
+import gama.annotations.action;
+import gama.annotations.arg;
+import gama.annotations.doc;
+import gama.annotations.skill;
+import gama.annotations.constants.IKeyword;
+import gama.annotations.support.IConcept;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.IType;
+import gama.api.kernel.agent.IAgent;
+import gama.api.kernel.skill.Skill;
+import gama.api.runtime.scope.IScope;
 import gama.plugin.fuzzylogic.utils.IFLKeyword;
-import gama.gaml.skills.Skill;
-import gama.gaml.types.IType;
 import net.sourceforge.jFuzzyLogic.FIS;
 
 @doc ("The fuzzy_logic skill is intended to define the actions of an agent reasoning using a Fuzzy logic Inference System (FIS).")

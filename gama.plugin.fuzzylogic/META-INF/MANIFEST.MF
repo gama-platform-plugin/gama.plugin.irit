@@ -6,8 +6,12 @@ Bundle-Vendor: UTC-IRIT
 Bundle-Version: 2026.6.0.qualifier
 Automatic-Module-Name: gama.plugin.fuzzylogic
 Bundle-RequiredExecutionEnvironment: JavaSE-25
-Require-Bundle: gama.core,gama.dependencies,gama.annotations,
- gama.processor,gama.api
+Require-Bundle: gama.core,
+ gama.dependencies,
+ gama.annotations,
+ gama.processor,
+ gama.api,
+ gaml.compiler;bundle-version="0.0.0"
 Bundle-ClassPath: lib/jFuzzyLogic.jar,
  .
 Export-Package: gama.plugin.fuzzylogic.gaml

@@ -21,40 +21,49 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.geotools.api.data.DataSourceException;
+import org.geotools.api.referencing.FactoryException;
+import org.geotools.api.referencing.crs.CoordinateReferenceSystem;
 import org.geotools.coverage.grid.GridCoverage2D;
-import org.geotools.data.DataSourceException;
+//import org.geotools.data.DataSourceException;
 import org.geotools.data.PrjFileReader; 
 import org.geotools.gce.geotiff.GeoTiffReader;
 import org.locationtech.jts.geom.Envelope;
-import org.opengis.referencing.FactoryException;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
+//import org.opengis.referencing.FactoryException;
+//import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import org.locationtech.jts.geom.LinearRing;
 
-import gama.core.common.IStatusMessage;
-import gama.core.common.geometry.Envelope3D;
-import gama.core.metamodel.shape.GamaPoint;
-import gama.core.metamodel.shape.GamaShape;
-import gama.core.metamodel.shape.GamaShapeFactory;
-import gama.core.metamodel.shape.IShape;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.example;
-import gama.annotations.precompiler.GamlAnnotations.file;
-import gama.annotations.precompiler.GamlAnnotations.no_test;
-import gama.annotations.precompiler.GamlAnnotations.operator;
-import gama.annotations.precompiler.IConcept;
-import gama.annotations.precompiler.IOperatorCategory;
-import gama.annotations.precompiler.Reason;
-import gama.core.runtime.GAMA;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaListFactory;
-import gama.core.util.IList;
+import gama.annotations.doc;
+import gama.annotations.file;
+import gama.annotations.no_test;
+import gama.annotations.operator;
+import gama.api.GAMA;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.GamaGeometryType;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.Types;
+import gama.api.kernel.topology.ICoordinateReferenceSystem;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.geometry.GamaPointFactory;
+import gama.api.types.geometry.GamaShapeFactory;
+import gama.api.types.geometry.IPoint;
+import gama.api.types.geometry.IShape;
+import gama.api.types.list.GamaListFactory;
+import gama.api.types.list.IList;
+import gama.api.types.matrix.GamaMatrixFactory;
+import gama.api.types.matrix.IMatrix;
+import gama.api.ui.IStatusMessage;
+import gama.api.utils.geometry.GamaEnvelope;
+import gama.api.utils.geometry.GamaEnvelopeFactory;
+import gama.api.utils.geometry.GamaGeometryFactory;
+import gama.api.utils.geometry.IEnvelope;
+import gama.annotations.example;
+import gama.annotations.support.IConcept;
+import gama.annotations.support.IOperatorCategory;
+import gama.annotations.support.Reason;
 import gama.core.util.file.GamaGridFile;
 import gama.core.util.matrix.GamaFloatMatrix;
 import gama.core.util.matrix.GamaIntMatrix;
-import gama.core.util.matrix.IMatrix;
-import gama.gaml.types.GamaGeometryType;
-import gama.gaml.types.IType;
-import gama.gaml.types.Types;
 import ucar.ma2.Array;
 import ucar.ma2.IndexIterator;
 import ucar.ma2.MAMath;
@@ -79,7 +88,7 @@ public class GamaNetCDFFile extends GamaGridFile {
 	@Override
 	public IList<String> getAttributes(final IScope scope) {
 		// No attributes
-		return GamaListFactory.EMPTY_LIST;
+		return GamaListFactory.create(Types.STRING);
 	}
 
 	private GamaNetCDFReader createReader(final IScope scope, final boolean fillBuffer) {
@@ -165,7 +174,7 @@ public class GamaNetCDFFile extends GamaGridFile {
 				}
 				// Necessary to compute it here, because it needs to be passed
 				// to the Hints
-				final CoordinateReferenceSystem crs = getExistingCRS(scope);
+//				final ICoordinateReferenceSystem crs = getExistingCRS(scope);
 //				NetCDFCRSUtilities nu=new NetCDFCRSUtilities();
 //				nu.getCoordinateSystem(variableDS);
 				ProjectionRect proj = null;
@@ -211,9 +220,9 @@ public class GamaNetCDFFile extends GamaGridFile {
 					}
 
 				} 
-				final Envelope3D env = Envelope3D.of(proj.getMinX(), proj.getMaxX(), proj.getMinY(), proj.getMaxY(), 0, 0);
+				final IEnvelope env = GamaEnvelopeFactory.of(proj.getMinX(), proj.getMaxX(), proj.getMinY(), proj.getMaxY(), 0, 0);
 				computeProjection(scope, env);
-				final Envelope envP = gis.getProjectedEnvelope();
+				final IEnvelope envP = gis.getProjectedEnvelope();
 				final double cellHeight = envP.getHeight() / numRows;
 				final double cellWidth = envP.getWidth() / numCols;
 				final IList<IShape> shapes = GamaListFactory.create(Types.GEOMETRY);
@@ -221,17 +230,19 @@ public class GamaNetCDFFile extends GamaGridFile {
 				final double originY = envP.getMinY();
 				final double maxY = envP.getMaxY();
 				final double maxX = envP.getMaxX();
-				shapes.add(new GamaPoint(originX, originY));
-				shapes.add(new GamaPoint(maxX, originY));
-				shapes.add(new GamaPoint(maxX, maxY));
-				shapes.add(new GamaPoint(originX, maxY));
+				shapes.add(GamaPointFactory.create(originX, originY));
+				shapes.add(GamaPointFactory.create(maxX, originY));
+				shapes.add(GamaPointFactory.create(maxX, maxY));
+				shapes.add(GamaPointFactory.create(originX, maxY));
 				shapes.add(shapes.get(0));
-				geom = GamaGeometryType.buildPolygon(shapes);
+				
+				geom = GamaShapeFactory.buildPolygon(shapes);
+
 				if (!fillBuffer) {
 					return;
 				}
 
-				final GamaPoint p = new GamaPoint(0, 0);
+				final IPoint p = GamaPointFactory.create(0, 0);
 //				coverage = store.read(null);
 				final double cmx = cellWidth / 2;
 				final double cmy = cellHeight / 2;
@@ -243,9 +254,9 @@ public class GamaNetCDFFile extends GamaGridFile {
 //					final int xx = i / numRows;
 //					final int yy = i - xx * numRows;
 //					System.out.println(numCols - xx - 1 + " " + yy);
-					p.x = originX + xx * cellWidth + cmx;
-					p.y = maxY - (yy * cellHeight + cmy);
-					GamaShape rect = (GamaShape) GamaGeometryType.buildRectangle(cellWidth, cellHeight, p);
+					p.setX(originX + xx * cellWidth + cmx);
+					p.setY(maxY - (yy * cellHeight + cmy));
+					IShape rect = GamaShapeFactory.buildRectangle(cellWidth, cellHeight, p);
 //					final double vals = cov[numCols-1-xx][numRows-1-yy];
 					final double vals = (double) coverage.get(scope,xx,yy);
 					if (gis == null) {
@@ -301,7 +312,8 @@ public class GamaNetCDFFile extends GamaGridFile {
 			matrix[r] = temp; // Now put the row from the other side in the current row
 		}
 
-		final IMatrix ret = new GamaFloatMatrix(row, col);
+//		final IMatrix ret = new GamaFloatMatrix(row, col);
+		final IMatrix ret = GamaMatrixFactory.create(col, row, Types.FLOAT);
 		for (int i = 0; i < col; i++) {
 			for (int j = 0; j < row; j++) {
 
@@ -331,12 +343,12 @@ public class GamaNetCDFFile extends GamaGridFile {
 	}
 
 	@Override
-	public Envelope3D computeEnvelope(final IScope scope) {
+	public IEnvelope computeEnvelope(final IScope scope) {
 		fillBuffer(scope);
 		return gis.getProjectedEnvelope();
 	}
 
-	public Envelope computeEnvelopeWithoutBuffer(final IScope scope) {
+	public IEnvelope computeEnvelopeWithoutBuffer(final IScope scope) {
 		if (gis == null) {
 			createReader(scope, false);
 		}
@@ -378,7 +390,7 @@ public class GamaNetCDFFile extends GamaGridFile {
 	}
 
 	@Override
-	protected CoordinateReferenceSystem getOwnCRS(final IScope scope) {
+	protected ICoordinateReferenceSystem getOwnCRS(final IScope scope) {
 		final File source = getFile(scope);
 		// check to see if there is a projection file
 		// getting name for the prj file
@@ -400,7 +412,7 @@ public class GamaNetCDFFile extends GamaGridFile {
 			PrjFileReader projReader = null;
 			try (FileInputStream fip = new FileInputStream(prjFile); final FileChannel channel = fip.getChannel();) {
 				projReader = new PrjFileReader(channel);
-				return projReader.getCoordinateReferenceSystem();
+				return (ICoordinateReferenceSystem) projReader.getCoordinateReferenceSystem();
 			} catch (final FileNotFoundException e) {
 				// warn about the error but proceed, it is not fatal
 				// we have at least the default crs to use
@@ -427,7 +439,7 @@ public class GamaNetCDFFile extends GamaGridFile {
 		} else if (isTiff(scope)) {
 			try {
 				final GeoTiffReader store = new GeoTiffReader(getFile(scope));
-				return store.getCoordinateReferenceSystem();
+				return (ICoordinateReferenceSystem) store.getCoordinateReferenceSystem();
 			} catch (final DataSourceException e) {
 				e.printStackTrace();
 			}
@@ -462,7 +474,7 @@ public class GamaNetCDFFile extends GamaGridFile {
 		return null;
 	}
 
-	public Double valueOf(final IScope scope, final GamaPoint loc) {
+	public Double valueOf(final IScope scope, final IPoint loc) {
 		if (getBuffer() == null) {
 			fillBuffer(scope);
 		}
@@ -594,7 +606,7 @@ public class GamaNetCDFFile extends GamaGridFile {
 	public static IMatrix readDataSlice(final IScope scope, final GamaNetCDFFile netcdf, int nbGrid, int t_index,
 			int z_index, int y_index, int x_index) {
 		if (netcdf == null || scope == null) {
-			return new GamaIntMatrix(0, 0);
+			return GamaMatrixFactory.create(0, 0, Types.INT);
 		} else {
 			if (netcdf.reader != null) {
 
@@ -630,6 +642,6 @@ public class GamaNetCDFFile extends GamaGridFile {
 			}
 		}
 
-		return new GamaIntMatrix(0, 0);
+		return GamaMatrixFactory.create(0, 0, Types.INT);
 	}
 }

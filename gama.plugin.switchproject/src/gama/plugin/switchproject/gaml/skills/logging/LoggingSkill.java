@@ -20,23 +20,24 @@ import org.jfree.data.json.impl.JSONArray;
 import org.jfree.data.json.impl.JSONObject;
 
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
-import gama.core.common.util.FileUtils;
-import gama.core.metamodel.agent.IAgent;
-import gama.annotations.precompiler.GamlAnnotations.action;
-import gama.annotations.precompiler.GamlAnnotations.arg;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.example;
-import gama.annotations.precompiler.GamlAnnotations.getter;
-import gama.annotations.precompiler.GamlAnnotations.skill;
-import gama.annotations.precompiler.GamlAnnotations.variable;
-import gama.annotations.precompiler.GamlAnnotations.vars;
-import gama.annotations.precompiler.IConcept;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.gaml.skills.Skill;
-import gama.gaml.types.IType;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.IType;
+import gama.api.kernel.agent.IAgent;
+import gama.api.kernel.skill.Skill;
+import gama.api.runtime.scope.IScope;
+import gama.api.utils.files.FileUtils;
+import gama.annotations.doc;
+import gama.annotations.action;
+import gama.annotations.variable;
+import gama.annotations.arg;
+import gama.annotations.example;
+import gama.annotations.getter;
+import gama.annotations.skill;
+import gama.annotations.vars;
+import gama.annotations.support.IConcept;
 
-/**
+
+/**	
  * Logger skill, add the capability to log data and write it into files
  * 
  * @author Jean-François Erdelyi

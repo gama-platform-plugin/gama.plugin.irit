@@ -13,10 +13,11 @@ package gama.plugin.switchproject.gama.util.event_manager;
 
 import java.util.UUID;
 
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.date.IDate;
 import gama.plugin.switchproject.gama.util.event_manager.Event.EventComparator;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaDate;
+
 
 /**
  * Fast event manager
@@ -80,7 +81,7 @@ public class EventManager extends EventQueue {
 				}
 			} else {
 				// Causality check
-				GamaDate simDate = scope.getSimulation().getClock().getCurrentDate();
+				IDate simDate = scope.getSimulation().getClock().getCurrentDate();
 				if (simDate.isGreaterThan(event.getDate(), true)) {
 					throw GamaRuntimeException.warning("Past is not allowed "
 							+ scope.getSimulation().getClock().getCurrentDate() + " vs " + event.getDate(), scope);

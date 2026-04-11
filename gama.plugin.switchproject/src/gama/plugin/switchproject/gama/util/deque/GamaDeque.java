@@ -17,23 +17,23 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import gama.core.common.util.StringUtils;
-import gama.core.metamodel.shape.GamaPoint;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaListFactory;
-import gama.core.util.GamaMapFactory;
-import gama.core.util.IContainer;
-import gama.core.util.IList;
-import gama.core.util.IMap;
-import gama.core.util.file.json.Json;
-import gama.core.util.file.json.JsonValue;
-import gama.core.util.matrix.IMatrix;
-import gama.gaml.types.GamaIntegerType;
-import gama.gaml.types.GamaMatrixType;
-import gama.gaml.types.IContainerType;
-import gama.gaml.types.IType;
-import gama.gaml.types.Types;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.GamaIntegerType;
+import gama.api.gaml.types.IContainerType;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.Types;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.geometry.IPoint;
+import gama.api.types.list.IList;
+import gama.api.types.map.GamaMapFactory;
+import gama.api.types.map.IMap;
+import gama.api.types.matrix.IMatrix;
+import gama.api.types.misc.IContainer;
+import gama.api.utils.StringUtils;
+import gama.core.util.json.Json;
+import gama.core.util.json.JsonValue;
+
+
 
 /**
  * Deque used for Queue and Stack types
@@ -312,7 +312,7 @@ public class GamaDeque<T> extends ArrayDeque<T> implements IContainer<Integer, O
 	 * Return matrix from values with prefered size
 	 */
 	@Override
-	public IMatrix<?> matrixValue(IScope scope, IType<?> contentType, GamaPoint size, boolean copy) {
+	public IMatrix<?> matrixValue(IScope scope, IType<?> contentType, IPoint size, boolean copy) {
 		return GamaMatrixType.from(scope, listValue(scope, contentType, copy), contentType, size);
 
 	}

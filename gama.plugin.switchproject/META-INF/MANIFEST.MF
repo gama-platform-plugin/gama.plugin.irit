@@ -18,3 +18,5 @@ Export-Package: gama.plugin.switchproject.gama.common.interfaces,
  gama.plugin.switchproject.gaml.skills.traffic,
  gama.plugin.switchproject.gaml.statements,
  gama.plugin.switchproject.gaml.types
+Import-Package: gama.plugin.switchproject.gaml.types,
+ gaml.compiler.descriptions

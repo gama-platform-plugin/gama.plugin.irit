@@ -15,18 +15,19 @@ import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.UUID;
 
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.statements.IStatement;
+import gama.api.gaml.symbols.Arguments;
+import gama.api.gaml.types.IType;
+import gama.api.kernel.agent.IAgent;
+import gama.api.kernel.species.ISpecies;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.date.GamaDateFactory;
+import gama.api.types.date.IDate;
+import gama.api.types.list.IList;
+import gama.api.types.map.IMap;
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
-import gama.core.metamodel.agent.IAgent;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaDate;
-import gama.core.util.GamaMap;
-import gama.core.util.IList;
-import gama.gaml.descriptions.ActionDescription;
-import gama.gaml.species.ISpecies;
-import gama.gaml.statements.Arguments;
-import gama.gaml.statements.IStatement;
-import gama.gaml.types.IType;
+import gaml.compiler.descriptions.ActionDescription;
 
 /**
  * Event used by the event manager
@@ -89,7 +90,7 @@ public class Event {
 	/**
 	 * The execution date
 	 */
-	private GamaDate date;
+	private IDate date;
 	
 	/**
 	 * The execution date (milli)
@@ -137,8 +138,8 @@ public class Event {
 	/**
 	 * Create a new event with action and Arguments as map
 	 */
-	public Event(IScope scope, IAgent caller, ActionDescription action, final GamaMap<String, Object> args,
-			GamaDate date, IAgent referredAgent) {
+	public Event(IScope scope, IAgent caller, ActionDescription action, final IMap<String, Object> args,
+			IDate date, IAgent referredAgent) {
 
 		this.scope = scope.copy("Later");
 		this.species = caller.getSpeciesName();
@@ -169,9 +170,10 @@ public class Event {
 	/**
 	 * Set date
 	 */
-	private void setDate(GamaDate date) throws GamaRuntimeException {
+	private void setDate(IDate date) throws GamaRuntimeException {
 		if (date != null) {
-			this.date = date.copy(scope);
+//			this.date = date.copy(scope);
+			this.date = GamaDateFactory.createFromIDate(scope, date);
 			this.milli = date.getLocalDateTime().atZone(ZoneOffset.UTC).toInstant().toEpochMilli();
 		} else {
 			this.date = null;
@@ -216,7 +218,7 @@ public class Event {
 	/**
 	 * Get date
 	 */
-	public GamaDate getDate() {
+	public IDate getDate() {
 		return date;
 	}
 

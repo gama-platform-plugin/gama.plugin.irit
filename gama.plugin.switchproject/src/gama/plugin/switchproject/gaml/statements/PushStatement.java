@@ -13,21 +13,23 @@ package gama.plugin.switchproject.gaml.statements;
 
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
 import gama.plugin.switchproject.gama.util.deque.GamaDeque;
-import gama.core.common.interfaces.IKeyword;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.example;
-import gama.annotations.precompiler.GamlAnnotations.facet;
-import gama.annotations.precompiler.GamlAnnotations.facets;
-import gama.annotations.precompiler.GamlAnnotations.inside;
-import gama.annotations.precompiler.GamlAnnotations.symbol;
-import gama.annotations.precompiler.GamlAnnotations.usage;
-import gama.annotations.precompiler.ISymbolKind;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.gaml.descriptions.IDescription;
-import gama.gaml.expressions.IExpression;
-import gama.gaml.statements.AbstractStatement;
-import gama.gaml.types.IType;
+import gama.annotations.symbol;
+import gama.annotations.inside;
+import gama.annotations.doc;
+import gama.annotations.facet;
+import gama.annotations.usage;
+import gama.annotations.example;
+import gama.annotations.facets;
+
+import gama.annotations.support.ISymbolKind;
+
+import gama.annotations.constants.IKeyword;
+import gama.api.compilation.descriptions.IDescription;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.expressions.IExpression;
+import gama.api.gaml.statements.AbstractStatement;
+import gama.api.gaml.types.IType;
+import gama.api.runtime.scope.IScope;
 
 /**
  * Push statement used by Queue and Stack types

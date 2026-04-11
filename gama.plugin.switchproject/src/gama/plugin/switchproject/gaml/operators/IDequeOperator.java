@@ -11,14 +11,15 @@
 
 package gama.plugin.switchproject.gaml.operators;
 
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.example;
-import gama.annotations.precompiler.GamlAnnotations.operator;
-import gama.annotations.precompiler.GamlAnnotations.usage;
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
-import gama.annotations.precompiler.ITypeProvider;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
+
+import gama.annotations.doc;
+import gama.annotations.usage;
+import gama.annotations.support.ITypeProvider;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.runtime.scope.IScope;
+import gama.annotations.example;
+import gama.annotations.operator;
 
 /**
  * Deque interface used for Queue and Stack types

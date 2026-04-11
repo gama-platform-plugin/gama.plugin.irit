@@ -14,20 +14,22 @@ package gama.plugin.switchproject.gaml.operators;
 import java.util.List;
 import java.util.Map.Entry;
 
+import gama.annotations.operator;
+import gama.annotations.support.IConcept;
+import gama.annotations.support.ITypeProvider;
+import gama.api.kernel.agent.IAgent;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.graph.IGraph;
+import gama.api.types.misc.IContainer;
+import gama.core.topology.graph.GamaSpatialGraph;
+import gama.core.topology.graph._SpatialEdge;
+import gama.core.topology.graph._SpatialVertex;
+import gama.annotations.doc;
+import gama.annotations.example;
+import gama.annotations.no_test;
+
+
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
-import gama.core.metamodel.agent.IAgent;
-import gama.core.metamodel.topology.graph.GamaSpatialGraph;
-import gama.core.metamodel.topology.graph._SpatialEdge;
-import gama.core.metamodel.topology.graph._SpatialVertex;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.example;
-import gama.annotations.precompiler.GamlAnnotations.no_test;
-import gama.annotations.precompiler.GamlAnnotations.operator;
-import gama.annotations.precompiler.IConcept;
-import gama.annotations.precompiler.ITypeProvider;
-import gama.core.runtime.IScope;
-import gama.core.util.IContainer;
-import gama.core.util.graph.IGraph;
 
 /**
  * Traffic operator
@@ -54,7 +56,7 @@ public class TrafficOperator {
 		final IGraph<?, ?> graph = new GamaSpatialGraph(roads, nodes, scope);
 		
 		// Set in/out node of roads agents
-		for (final Entry<?, ?> entry : graph._internalEdgeMap().entrySet()) {
+		for (final Entry<?, ?> entry : graph.getEdgeMap().entrySet()) {
 			IAgent source = (IAgent) ((_SpatialEdge) entry.getValue()).getSource();
 			if (source != null) {
 				((IAgent) entry.getKey()).setAttribute(IKeywordIrit.NODE_IN, source);
@@ -67,7 +69,7 @@ public class TrafficOperator {
 		}
 		
 		// Set in/out roads of nodes agents
-		for (final Entry<?, ?> entry : graph._internalVertexMap().entrySet()) {
+		for (final Entry<?, ?> entry : graph.getVertexMap().entrySet()) {
 			for (final Object edge : ((_SpatialVertex) entry.getValue()).getInEdges()) {
 				((List<IAgent>) ((IAgent) entry.getKey()).getAttribute(IKeywordIrit.ROADS_IN)).add((IAgent) edge);
 			}

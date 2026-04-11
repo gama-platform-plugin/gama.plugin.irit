@@ -16,21 +16,30 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
+import gama.annotations.type;
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
 import gama.plugin.switchproject.gama.util.deque.GamaStack;
-import gama.core.metamodel.shape.GamaPoint;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.type;
-import gama.annotations.precompiler.IConcept;
-import gama.annotations.precompiler.ISymbolKind;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaDate;
-import gama.core.util.IContainer;
-import gama.gaml.expressions.IExpression;
-import gama.gaml.types.GamaContainerType;
-import gama.gaml.types.IType;
-import gama.gaml.types.Types;
+
+import gama.annotations.symbol;
+import gama.annotations.inside;
+import gama.annotations.doc;
+import gama.annotations.facet;
+import gama.annotations.usage;
+import gama.annotations.example;
+import gama.annotations.facets;
+
+import gama.annotations.support.ISymbolKind;
+
+import gama.annotations.constants.IKeyword;
+import gama.api.compilation.descriptions.IDescription;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.expressions.IExpression;
+import gama.api.gaml.statements.AbstractStatement;
+import gama.api.gaml.types.GamaContainerType;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.Types;
+import gama.api.runtime.scope.IScope;
+import gama.annotations.support.IConcept;
 
 /**
  * Stack type in GAML

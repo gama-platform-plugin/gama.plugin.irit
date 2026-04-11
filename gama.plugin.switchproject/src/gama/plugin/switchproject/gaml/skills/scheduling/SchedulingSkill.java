@@ -13,25 +13,28 @@ package gama.plugin.switchproject.gaml.skills.scheduling;
 
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
 import gama.plugin.switchproject.gaml.architecure.event_manager.EventManagerArchitecture;
-import gama.core.metamodel.agent.IAgent;
-import gama.annotations.precompiler.GamlAnnotations.action;
-import gama.annotations.precompiler.GamlAnnotations.arg;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.example;
-import gama.annotations.precompiler.GamlAnnotations.getter;
-import gama.annotations.precompiler.GamlAnnotations.setter;
-import gama.annotations.precompiler.GamlAnnotations.skill;
-import gama.annotations.precompiler.GamlAnnotations.variable;
-import gama.annotations.precompiler.GamlAnnotations.vars;
-import gama.annotations.precompiler.IConcept;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaDate;
-import gama.core.util.GamaMap;
-import gama.gaml.descriptions.ActionDescription;
-import gama.gaml.skills.Skill;
-import gama.gaml.types.IType;
+import gaml.compiler.descriptions.ActionDescription;
+import gama.annotations.doc;
+import gama.annotations.usage;
+import gama.annotations.vars;
+import gama.annotations.variable;
+import gama.annotations.skill;
+import gama.annotations.getter;
+import gama.annotations.setter;
+import gama.annotations.action;
+import gama.annotations.arg;
 
+import gama.annotations.support.IConcept;
+import gama.annotations.support.ITypeProvider;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.IType;
+import gama.api.kernel.agent.IAgent;
+import gama.api.kernel.skill.Skill;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.date.IDate;
+import gama.api.types.map.IMap;
+import gama.annotations.example;
+import gama.annotations.operator;
 /**
  * Scheduling skill
  * 
@@ -65,11 +68,11 @@ public class SchedulingSkill extends Skill {
 	}
 
 	@getter(IKeywordIrit.EVENT_DATE)
-	public GamaDate getAt(final IAgent agent) {
+	public IDate getAt(final IAgent agent) {
 		if (agent == null) {
 			return null;
 		}
-		return (GamaDate) agent.getAttribute(IKeywordIrit.EVENT_DATE);
+		return (IDate) agent.getAttribute(IKeywordIrit.EVENT_DATE);
 	}
 
 	@getter(IKeywordIrit.REFER_TO)
@@ -92,11 +95,11 @@ public class SchedulingSkill extends Skill {
 	@SuppressWarnings("unchecked")
 	public String register(final IScope scope) throws GamaRuntimeException {
 		// Get date
-		GamaDate date = (GamaDate) scope.getArg(IKeywordIrit.AT, IType.DATE);
+		IDate date = (IDate) scope.getArg(IKeywordIrit.AT, IType.DATE);
 		// Get caller
 		IAgent caller = scope.getAgent();
 		// Get arguments
-		GamaMap<String, Object> args = (GamaMap<String, Object>) scope.getArg(IKeywordIrit.WITH_ARGUMENTS, IType.MAP);
+		IMap<String, Object> args = (IMap<String, Object>) scope.getArg(IKeywordIrit.WITH_ARGUMENTS, IType.MAP);
 		// Get refer to agent
 		IAgent referredAgent = (IAgent) scope.getArg(IKeywordIrit.REFER_TO, IType.AGENT);
 		

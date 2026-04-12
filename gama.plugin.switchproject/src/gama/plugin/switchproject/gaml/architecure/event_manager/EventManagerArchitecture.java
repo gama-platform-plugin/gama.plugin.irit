@@ -11,24 +11,26 @@
 
 package gama.plugin.switchproject.gaml.architecure.event_manager;
 
+import gama.annotations.doc;
+import gama.annotations.vars;
+import gama.annotations.constants.IKeyword;
+import gama.annotations.variable;
+import gama.annotations.skill;
+import gama.annotations.getter;
+import gama.annotations.support.IConcept;
+import gama.api.gaml.types.IType;
+import gama.api.kernel.agent.IAgent;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.date.IDate;
+import gama.api.types.map.IMap;
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
 import gama.plugin.switchproject.gama.util.event_manager.Event;
 import gama.plugin.switchproject.gama.util.event_manager.EventManager;
-import gama.core.common.interfaces.IKeyword;
-import gama.core.metamodel.agent.IAgent;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.getter;
-import gama.annotations.precompiler.GamlAnnotations.skill;
-import gama.annotations.precompiler.GamlAnnotations.variable;
-import gama.annotations.precompiler.GamlAnnotations.vars;
-import gama.annotations.precompiler.IConcept;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaDate;
-import gama.core.util.GamaMap;
+import gaml.compiler.descriptions.ActionDescription;
+import gama.api.compilation.descriptions.IDescription;
+import gama.api.exceptions.GamaRuntimeException;
 import gama.gaml.architecture.reflex.ReflexArchitecture;
-import gama.gaml.descriptions.ActionDescription;
-import gama.gaml.types.IType;
+
 
 /**
  * Event manager architecture
@@ -109,8 +111,8 @@ public class EventManagerArchitecture extends ReflexArchitecture {
 	/**
 	 * Internal register (used by "scheduling" skill)
 	 */
-	public String register(final IScope scope, final IAgent caller, final ActionDescription action,
-			final GamaMap<String, Object> args, final GamaDate date, final IAgent referredAgent)
+	public String register(final IScope scope, final IAgent caller, final IDescription action,
+			final IMap<String, Object> args, final IDate date, final IAgent referredAgent)
 			throws GamaRuntimeException {
 
 		IAgent agent = (IAgent) getCurrentAgent(scope).getAttribute(IKeywordIrit.EVENT_MANAGER);
@@ -119,7 +121,7 @@ public class EventManagerArchitecture extends ReflexArchitecture {
 		}
 
 		return getCurrentManagerIfExists(agent).register(scope,
-				new Event(scope, caller, action, args, date, referredAgent));
+				new Event(scope, caller, (ActionDescription) action, args, date, referredAgent));
 	}
 	
 	/**

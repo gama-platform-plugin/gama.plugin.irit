@@ -26,6 +26,7 @@ import gama.annotations.arg;
 
 import gama.annotations.support.IConcept;
 import gama.annotations.support.ITypeProvider;
+import gama.api.compilation.descriptions.IDescription;
 import gama.api.exceptions.GamaRuntimeException;
 import gama.api.gaml.types.IType;
 import gama.api.kernel.agent.IAgent;
@@ -105,7 +106,7 @@ public class SchedulingSkill extends Skill {
 		
 		// Get action
 		String actionName = (String) scope.getArg(IKeywordIrit.THE_ACTION, IType.STRING);
-		ActionDescription action;
+		IDescription action;
 		if(referredAgent == null ) {
 			action = caller.getSpecies().getDescription().getAction(actionName);			
 		} else {

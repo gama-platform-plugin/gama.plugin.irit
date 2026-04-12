@@ -24,15 +24,16 @@ import gama.api.gaml.types.IType;
 import gama.api.gaml.types.Types;
 import gama.api.runtime.scope.IScope;
 import gama.api.types.geometry.IPoint;
+import gama.api.types.list.GamaListFactory;
 import gama.api.types.list.IList;
 import gama.api.types.map.GamaMapFactory;
 import gama.api.types.map.IMap;
+import gama.api.types.matrix.GamaMatrixFactory;
 import gama.api.types.matrix.IMatrix;
 import gama.api.types.misc.IContainer;
 import gama.api.utils.StringUtils;
-import gama.core.util.json.Json;
-import gama.core.util.json.JsonValue;
-
+import gama.api.utils.json.IJson;
+import gama.api.utils.json.IJsonValue;
 
 
 /**
@@ -176,11 +177,10 @@ public class GamaDeque<T> extends ArrayDeque<T> implements IContainer<Integer, O
 		return sb.toString();
 	}
 
-
 	@Override
-	public JsonValue serializeToJson(Json json) {
-		return json.array(this);
-	}	
+	public IJsonValue serializeToJson(IJson json) {
+		return  json.array(this);
+	}
 	
 	/**
 	 * Clone data
@@ -313,7 +313,12 @@ public class GamaDeque<T> extends ArrayDeque<T> implements IContainer<Integer, O
 	 */
 	@Override
 	public IMatrix<?> matrixValue(IScope scope, IType<?> contentType, IPoint size, boolean copy) {
-		return GamaMatrixType.from(scope, listValue(scope, contentType, copy), contentType, size);
-
+		return GamaMatrixFactory.createFrom(scope, listValue(scope, contentType, copy), contentType, size);
 	}
+
 }
+
+
+
+
+

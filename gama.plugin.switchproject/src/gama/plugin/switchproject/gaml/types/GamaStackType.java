@@ -20,25 +20,19 @@ import gama.annotations.type;
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
 import gama.plugin.switchproject.gama.util.deque.GamaStack;
 
-import gama.annotations.symbol;
-import gama.annotations.inside;
 import gama.annotations.doc;
-import gama.annotations.facet;
-import gama.annotations.usage;
-import gama.annotations.example;
-import gama.annotations.facets;
-
 import gama.annotations.support.ISymbolKind;
 
-import gama.annotations.constants.IKeyword;
-import gama.api.compilation.descriptions.IDescription;
 import gama.api.exceptions.GamaRuntimeException;
 import gama.api.gaml.expressions.IExpression;
-import gama.api.gaml.statements.AbstractStatement;
 import gama.api.gaml.types.GamaContainerType;
 import gama.api.gaml.types.IType;
+import gama.api.gaml.types.ITypesManager;
 import gama.api.gaml.types.Types;
 import gama.api.runtime.scope.IScope;
+import gama.api.types.date.IDate;
+import gama.api.types.geometry.GamaPoint;
+import gama.api.types.misc.IContainer;
 import gama.annotations.support.IConcept;
 
 /**
@@ -48,7 +42,7 @@ import gama.annotations.support.IConcept;
  */
 @SuppressWarnings("rawtypes")
 @type(name = IKeywordIrit.STACK, id = IKeywordIrit.STACK_TYPE, wraps = {
-		GamaStack.class }, kind = ISymbolKind.Variable.CONTAINER, doc = {
+		GamaStack.class }, kind = ISymbolKind.CONTAINER, doc = {
 				@doc("Stack") }, concept = { IConcept.TYPE, IConcept.CONTAINER, IKeywordIrit.STACK })
 public class GamaStackType extends GamaContainerType<GamaStack> {
 
@@ -58,13 +52,18 @@ public class GamaStackType extends GamaContainerType<GamaStack> {
 	/**
 	 * TEMPORY CONSTRUCTOR TODO REMOVE THIS
 	 */
-	public GamaStackType() {
+	public GamaStackType(final ITypesManager typesManager) {
+		super(typesManager);
 		id = IKeywordIrit.STACK_TYPE;
 		name = IKeywordIrit.STACK;
 		parent = null;
 		plugin = "gama.plugin.switchproject";
 		support = GamaStack.class;
-		varKind = ISymbolKind.Variable.CONTAINER;
+		varKind = ISymbolKind.CONTAINER;
+	}
+	
+	public GamaStackType() {
+		super(null);
 	}
 
 	// ############################################
@@ -91,8 +90,8 @@ public class GamaStackType extends GamaContainerType<GamaStack> {
 			return new GamaStack(contentsType);
 		}
 
-		if (obj instanceof GamaDate) {
-			return new GamaStack(contentsType, ((GamaDate) obj).listValue(scope, contentsType));
+		if (obj instanceof IDate) {
+			return new GamaStack(contentsType, ((IDate) obj).listValue(scope, contentsType));
 		}
 
 		if (obj instanceof IContainer) {

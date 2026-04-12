@@ -12,25 +12,26 @@
 package gama.plugin.switchproject.gaml.skills.traffic;
 
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
-import gama.core.common.interfaces.IKeyword;
-import gama.core.metamodel.agent.IAgent;
-import gama.core.metamodel.topology.ITopology;
-import gama.annotations.precompiler.GamlAnnotations.action;
-import gama.annotations.precompiler.GamlAnnotations.arg;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.example;
-import gama.annotations.precompiler.GamlAnnotations.getter;
-import gama.annotations.precompiler.GamlAnnotations.setter;
-import gama.annotations.precompiler.GamlAnnotations.skill;
-import gama.annotations.precompiler.GamlAnnotations.variable;
-import gama.annotations.precompiler.GamlAnnotations.vars;
-import gama.annotations.precompiler.IConcept;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.path.IPath;
-import gama.gaml.operators.Cast;
+import gama.annotations.variable;
+import gama.annotations.vars;
+import gama.annotations.constants.IKeyword;
+import gama.annotations.doc;
+import gama.annotations.skill;
+import gama.annotations.getter;
+import gama.annotations.setter;
+import gama.annotations.action;
+import gama.annotations.arg;
+import gama.annotations.example;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.IType;
+import gama.api.kernel.agent.IAgent;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.graph.IPath;
+import gama.api.types.topology.GamaTopologyFactory;
+import gama.api.types.topology.ITopology;
 import gama.gaml.skills.MovingSkill;
-import gama.gaml.types.IType;
+import gama.annotations.support.IConcept;
+
 
 /**
  * IDM skill, IDM implementation
@@ -231,7 +232,7 @@ public class IdmSkill extends MovingSkill {
 	 */
 	protected ITopology getTopology(final IScope scope) {
 		final Object on = scope.getArg("on", IType.NONE);
-		final ITopology topo = Cast.asTopology(scope, on);
+		final ITopology topo = GamaTopologyFactory.castToTopology(scope, on, false);
 		if (topo == null) {
 			return scope.getTopology();
 		}

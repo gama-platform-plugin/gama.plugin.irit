@@ -20,10 +20,10 @@ public class TypesIrit {
 	/**
 	 * Tempory static types QUEUE
 	 */
-	public static GamaQueueType QUEUE = new gama.plugin.switchproject.gaml.types.GamaQueueType();
+	public static GamaQueueType QUEUE = new GamaQueueType();
 
 	/**
 	 * Tempory static types STACK
 	 */
-	public static GamaStackType STACK = new gama.plugin.switchproject.gaml.types.GamaStackType();
+	public static GamaStackType STACK = new GamaStackType();
 }

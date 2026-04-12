@@ -16,21 +16,24 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-import gama.annotations.precompiler.IConcept;
-import gama.annotations.precompiler.ISymbolKind;
-import gama.core.metamodel.shape.GamaPoint;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaDate;
-import gama.core.util.IContainer;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.type;
 import gama.plugin.switchproject.gama.common.interfaces.IKeywordIrit;
 import gama.plugin.switchproject.gama.util.deque.GamaQueue;
-import gama.gaml.expressions.IExpression;
-import gama.gaml.types.GamaContainerType;
-import gama.gaml.types.IType;
-import gama.gaml.types.Types;
+
+import gama.annotations.doc;
+import gama.annotations.type;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.expressions.IExpression;
+import gama.api.gaml.types.GamaContainerType;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.ITypesManager;
+import gama.annotations.support.IConcept;
+import gama.api.gaml.types.Types;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.date.IDate;
+import gama.api.types.geometry.IPoint;
+import gama.api.types.misc.IContainer;
+import gama.annotations.support.ISymbolKind;
+
 
 /**
  * Queue type in GAML
@@ -39,7 +42,7 @@ import gama.gaml.types.Types;
  */
 @SuppressWarnings("rawtypes")
 @type(name = IKeywordIrit.QUEUE, id = IKeywordIrit.QUEUE_TYPE, wraps = {
-		GamaQueue.class }, kind = ISymbolKind.Variable.CONTAINER, doc = {
+		GamaQueue.class }, kind = ISymbolKind.CONTAINER, doc = {
 				@doc("Queue") }, concept = { IConcept.TYPE, IConcept.CONTAINER, IKeywordIrit.QUEUE })
 public class GamaQueueType extends GamaContainerType<GamaQueue> {
 
@@ -49,14 +52,20 @@ public class GamaQueueType extends GamaContainerType<GamaQueue> {
 	/**
 	 * TEMPORY CONSTRUCTOR TODO REMOVE THIS
 	 */
-	public GamaQueueType() {
+	public GamaQueueType(final ITypesManager typesManager) {
+		super(typesManager);
 		id = IKeywordIrit.QUEUE_TYPE;
 		name = IKeywordIrit.QUEUE;
 		parent = null;
 		plugin = "gama.plugin.switchproject.gama.switchproject";
 		support = GamaQueue.class;
-		varKind = ISymbolKind.Variable.CONTAINER;
+		varKind = ISymbolKind.CONTAINER;
 	}
+	
+	public GamaQueueType() {
+		super(null);	
+	}
+
 
 	// ############################################
 	// Methods
@@ -82,8 +91,8 @@ public class GamaQueueType extends GamaContainerType<GamaQueue> {
 			return new GamaQueue(contentsType);
 		}
 
-		if (obj instanceof GamaDate) {
-			return new GamaQueue(contentsType, ((GamaDate) obj).listValue(scope, contentsType));
+		if (obj instanceof IDate) {
+			return new GamaQueue(contentsType, ((IDate) obj).listValue(scope, contentsType));
 		}
 
 		if (obj instanceof IContainer) {
@@ -99,9 +108,9 @@ public class GamaQueueType extends GamaContainerType<GamaQueue> {
 			return new GamaQueue(contentsType, new Integer[] { c.getRed(), c.getGreen(), c.getBlue() });
 		}
 
-		if (obj instanceof GamaPoint) {
-			final GamaPoint point = (GamaPoint) obj;
-			return new GamaQueue(contentsType, new Double[] { point.x, point.y });
+		if (obj instanceof IPoint) {
+			final IPoint point = (IPoint) obj;
+			return new GamaQueue(contentsType, new Double[] { point.getX(), point.getY() });
 		}
 
 		if (obj instanceof String) {

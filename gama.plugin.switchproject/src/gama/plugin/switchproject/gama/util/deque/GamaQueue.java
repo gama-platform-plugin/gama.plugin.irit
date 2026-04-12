@@ -15,8 +15,8 @@ import java.util.Collection;
 
 import gama.plugin.switchproject.gaml.operators.IDequeOperator;
 import gama.plugin.switchproject.gaml.types.TypesIrit;
-import gama.core.runtime.IScope;
-import gama.gaml.types.IType;
+import gama.api.gaml.types.IType;
+import gama.api.runtime.scope.IScope;
 
 /**
  * Queue type used by GAML type

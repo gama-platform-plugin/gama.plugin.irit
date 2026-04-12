@@ -13,10 +13,10 @@ package gama.plugin.switchproject.gama.util.deque;
 
 import java.util.Collection;
 
+import gama.api.gaml.types.IType;
+import gama.api.runtime.scope.IScope;
 import gama.plugin.switchproject.gaml.operators.IDequeOperator;
 import gama.plugin.switchproject.gaml.types.TypesIrit;
-import gama.core.runtime.IScope;
-import gama.gaml.types.IType;
 
 /**
  * Stack type used by GAML type

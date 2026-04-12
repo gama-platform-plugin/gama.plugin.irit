@@ -8,7 +8,5 @@ Automatic-Module-Name: ummisco.gama.extensions.matlab
 Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: gama.core,gama.dependencies,gama.annotations,
  gama.processor,gama.api
-Export-Package: gama.plugin.matlab.gaml.files,
- gama.plugin.matlab.gaml.species
 Bundle-ClassPath: libs/engine.jar,
  .

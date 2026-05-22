@@ -42,7 +42,7 @@ import gama.annotations.support.IConcept;
  */
 @SuppressWarnings("rawtypes")
 @type(name = IKeywordIrit.STACK, id = IKeywordIrit.STACK_TYPE, wraps = {
-		GamaStack.class }, kind = ISymbolKind.CONTAINER, doc = {
+		GamaStack.class }, kind = ISymbolKind.REGULAR, doc = {
 				@doc("Stack") }, concept = { IConcept.TYPE, IConcept.CONTAINER, IKeywordIrit.STACK })
 public class GamaStackType extends GamaContainerType<GamaStack> {
 
@@ -59,7 +59,7 @@ public class GamaStackType extends GamaContainerType<GamaStack> {
 		parent = null;
 		plugin = "gama.plugin.switchproject";
 		support = GamaStack.class;
-		varKind = ISymbolKind.CONTAINER;
+		varKind = ISymbolKind.REGULAR;
 	}
 	
 	public GamaStackType() {

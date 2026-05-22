@@ -42,7 +42,7 @@ import gama.annotations.support.ISymbolKind;
  */
 @SuppressWarnings("rawtypes")
 @type(name = IKeywordIrit.QUEUE, id = IKeywordIrit.QUEUE_TYPE, wraps = {
-		GamaQueue.class }, kind = ISymbolKind.CONTAINER, doc = {
+		GamaQueue.class }, kind = ISymbolKind.REGULAR, doc = {
 				@doc("Queue") }, concept = { IConcept.TYPE, IConcept.CONTAINER, IKeywordIrit.QUEUE })
 public class GamaQueueType extends GamaContainerType<GamaQueue> {
 
@@ -59,7 +59,7 @@ public class GamaQueueType extends GamaContainerType<GamaQueue> {
 		parent = null;
 		plugin = "gama.plugin.switchproject.gama.switchproject";
 		support = GamaQueue.class;
-		varKind = ISymbolKind.CONTAINER;
+		varKind = ISymbolKind.REGULAR;
 	}
 	
 	public GamaQueueType() {

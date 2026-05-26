@@ -6,8 +6,8 @@ import java.util.concurrent.Future;
 import com.mathworks.engine.EngineException;
 import com.mathworks.engine.MatlabEngine;
 
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
+import gama.api.runtime.scope.IScope;
+import gama.api.exceptions.GamaRuntimeException;
 
 public class MatlabEngineManager {
 	public static MatlabEngine startMatlabEngine(final IScope scope, final boolean isAsync) {

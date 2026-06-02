@@ -5,8 +5,8 @@ import java.util.concurrent.ExecutionException;
 
 import com.mathworks.engine.MatlabEngine;
 
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
+import gama.api.runtime.scope.IScope;
+import gama.api.exceptions.GamaRuntimeException;
 import gama.plugin.matlab.gama.utils.TypeConverter;
 
 public class MatlabEngineInteraction {

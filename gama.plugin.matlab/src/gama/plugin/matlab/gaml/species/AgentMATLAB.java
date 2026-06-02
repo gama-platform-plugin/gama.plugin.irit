@@ -6,24 +6,24 @@ import java.util.concurrent.Future;
 
 import com.mathworks.engine.MatlabEngine;
 
-import gama.core.metamodel.agent.GamlAgent;
-import gama.core.metamodel.agent.IAgent;
-import gama.core.metamodel.population.IPopulation;
-import gama.annotations.precompiler.GamlAnnotations.action;
-import gama.annotations.precompiler.GamlAnnotations.arg;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.getter;
-import gama.annotations.precompiler.GamlAnnotations.setter;
-import gama.annotations.precompiler.GamlAnnotations.species;
-import gama.annotations.precompiler.GamlAnnotations.variable;
-import gama.annotations.precompiler.GamlAnnotations.vars;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.file.GamaFile;
+import gama.core.agent.GamlAgent;
+import gama.api.kernel.agent.IAgent;
+import gama.api.kernel.agent.IPopulation;
+import gama.annotations.action;
+import gama.annotations.arg;
+import gama.annotations.doc;
+import gama.annotations.getter;
+import gama.annotations.setter;
+import gama.annotations.species;
+import gama.annotations.variable;
+import gama.annotations.vars;
+import gama.api.runtime.scope.IScope;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.types.file.GamaFile;
 import gama.plugin.matlab.gama.matlabengine.MatlabEngineInteraction;
 import gama.plugin.matlab.gama.matlabengine.MatlabEngineManager;
 import gama.plugin.matlab.gama.utils.IMatlabKeyword;
-import gama.gaml.types.IType;
+import gama.api.gaml.types.IType;
 
 @species (
 		name = "agent_MATLAB",

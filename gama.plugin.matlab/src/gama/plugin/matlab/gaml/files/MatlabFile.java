@@ -1,23 +1,23 @@
 package gama.plugin.matlab.gaml.files;
 
-import gama.annotations.precompiler.IConcept;
+import gama.annotations.support.IConcept;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.file;
-import gama.core.common.geometry.Envelope3D;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaListFactory;
-import gama.core.util.IList;
-import gama.core.util.file.GamaFile;
-import gama.gaml.operators.Strings;
-import gama.gaml.types.IContainerType;
-import gama.gaml.types.IType;
-import gama.gaml.types.Types;
+import gama.annotations.doc;
+import gama.annotations.file;
+import gama.api.utils.geometry.IEnvelope;
+import gama.api.runtime.scope.IScope;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.types.list.GamaListFactory;
+import gama.api.types.list.IList;
+import gama.api.types.file.GamaFile;
+import gama.api.utils.StringUtils;
+import gama.api.gaml.types.IContainerType;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.Types;
 
 @file (
 	name = "matlab",
@@ -68,14 +68,14 @@ public class MatlabFile extends GamaFile<IList<String>, String> {
 		getContents(scope);
 		final StringBuilder sb = new StringBuilder(getBuffer().length(scope) * 200);
 		for (final String s : getBuffer().iterable(scope)) {
-			sb.append(s).append(Strings.LN);
+			sb.append(s).append(StringUtils.LN);
 		}
 		sb.setLength(sb.length() - 1);
 		return sb.toString();
 	}	
 	
 	@Override
-	public Envelope3D computeEnvelope(IScope scope) {
+	public IEnvelope computeEnvelope(final IScope scope) {
 		return null;
 	}
 	

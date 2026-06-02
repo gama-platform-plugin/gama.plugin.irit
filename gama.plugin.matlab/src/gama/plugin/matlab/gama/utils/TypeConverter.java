@@ -2,11 +2,11 @@ package gama.plugin.matlab.gama.utils;
 
 import java.util.ArrayList;
 
-import gama.core.runtime.IScope;
-import gama.core.util.GamaListFactory;
-import gama.core.util.IList;
-import gama.gaml.types.GamaMatrixType;
-import gama.gaml.types.Types;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.list.GamaListFactory;
+import gama.api.types.list.IList;
+import gama.api.types.matrix.GamaMatrixFactory;
+import gama.api.gaml.types.Types;
 
 public class TypeConverter {
 	public static Object Matlab2GamaType(IScope scope, Object output) {
@@ -27,7 +27,7 @@ public class TypeConverter {
 				}
 				lmat.add(GamaListFactory.create(scope, Types.FLOAT, l));
 			}
-			return GamaMatrixType.staticCast(scope, lmat, null, Types.FLOAT, true);
+			return GamaMatrixFactory.castToMatrix(scope, lmat, null, Types.FLOAT, true);
 		}
 		 
 		// Other cases checked : float and bool

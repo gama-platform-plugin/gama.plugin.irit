@@ -85,7 +85,7 @@ jobs:
 
       - uses: gama-platform/gama/.github/actions/maven-dependency-cache@main
         name: Save Maven Dependency Cache
-        if: "${{ (inputs.USE_DEPENDENCY_CACHE || github.event_name == 'push') && (github.ref_name == 'main') }}"
+        if: "${{ (inputs.USE_DEPENDENCY_CACHE || github.event_name == 'push') && (github.ref_name == 'GAMA_2026-06') }}"
         with:
           action: save
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
